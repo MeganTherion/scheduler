@@ -5,12 +5,9 @@ import classNames from "classnames";
 
 export default function Application(props) {
   return(
-    <main className="appointment__add">
-      <img className="appointment__add-button"
-      onAdd={props.onAdd}
-      src="images/add.png"
-      alt="Add"
-    />
-    </main> 
+    <header className="appointment__time">
+  <h4 className="text--semi-bold">{props.time}</h4>
+  <hr className="appointment__separator" />
+</header>
   );
 };
