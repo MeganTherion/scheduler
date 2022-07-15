@@ -3,7 +3,7 @@ import Appointment from "components/Appointment";
 import "components/Appointment/styles.scss";
 import classNames from "classnames";
 
-export default function Application(props) {
+export default function Show(props) {
   return(
     <main className="appointment__card appointment__card--show">
     <section className="appointment__card-left">
