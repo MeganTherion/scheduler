@@ -5,6 +5,6 @@ import classNames from "classnames";
 
 export default function Application(props) {
   return(
-    <article className="appointment"></article>
+    <article className="appointment" time={props.time}></article>
   );
 };
