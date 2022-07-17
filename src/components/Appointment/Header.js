@@ -3,7 +3,7 @@ import Appointment from "components/Appointment";
 import "components/Appointment/styles.scss";
 import classNames from "classnames";
 
-export default function Application(props) {
+export default function Header(props) {
   return(
     <header className="appointment__time">
   <h4 className="text--semi-bold">{props.time}</h4>
