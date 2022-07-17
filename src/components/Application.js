@@ -3,8 +3,47 @@ import React, { useState } from "react";
 import DayList from "components/DayList";
 import InterviewerList from "components/InterviewerList";
 import "components/Application.scss";
+import Appointment from "./Appointment";
 
-// import InterviewerList from "components/InterviewerList";
+
+const appointments = {
+  "1": {
+    id: 1,
+    time: "12pm",
+  },
+  "2": {
+    id: 2,
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer:{
+        id: 3,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
+  },
+  "3": {
+    id: 3,
+    time: "2pm",
+  },
+  "4": {
+    id: 4,
+    time: "3pm",
+    interview: {
+      student: "Archie Andrews",
+      interviewer:{
+        id: 4,
+        name: "Cohana Roy",
+        avatar: "https://i.imgur.com/FK8V841.jpg",
+      }
+    }
+  },
+  "5": {
+    id: 5,
+    time: "4pm",
+  }
+};
 
 const days = [
   {
@@ -37,6 +76,14 @@ const interviewers = [
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
   const [interviewer, setInterviewer] = useState();
+  const mappedAppts = Object.values(appointments).map(appointment => (
+    <Appointment 
+      key={appointment.id}
+      id={appointment.id}
+      time={appointment.time}
+      interview={appointment.interview}
+      />
+    ));
   return (
     <main className="layout">
       <section className="sidebar">
@@ -58,6 +105,7 @@ export default function Application(props) {
  setInterviewer={setInterviewer}
  interviewer={interviewer}
   />
+
 </nav>
 <img
   className="sidebar__lhl sidebar--centered"
@@ -66,7 +114,7 @@ export default function Application(props) {
 />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {mappedAppts}
       </section>
     </main>
   );
