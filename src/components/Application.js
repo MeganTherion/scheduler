@@ -7,6 +7,13 @@ import Appointment from "./Appointment";
 import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 import useVisualMode from "hooks/useVisualMode";
 
+///KNOWN ISSUES //////
+// > FORM component not setting student name onChange
+// > INTERVIEWERS list in form not selecting
+// > APPOINTMENT not saving in form, only cancelling
+// > click on DAYS = everything gone
+// > SAVING not working
+
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
