@@ -16,7 +16,7 @@ export default function InterviewerListItem(props) {
     alt={props.name}
   />
   {props.selected && props.name}
-  {props.children}
+  {/* {props.children} */}
 </li>
   )
 }

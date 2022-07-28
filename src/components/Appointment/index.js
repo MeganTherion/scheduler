@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import axios from "axios";
 import "components/Appointment/styles.scss";
 import Header from "./Header";
@@ -16,38 +16,34 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-
   function save(name, interviewer) {
     const interview = {
       student: name,
-      interviewer: interviewer
+      interviewer: interviewer,
     };
     transition(SAVING);
     props.bookInterview(props.id, interview)
-    .then(() => transition(SHOW))
+      .then(() => {transition(SHOW)});
   }
 
-  return(
+  return (
     <article className="appointment">
-      <Header 
-      time={props.time} />
-    {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-{mode === SHOW && (
-  <Show
-    student={props.interview.student}
-    interviewer={props.interview.interviewer}
-
-  />
-)}
-    {mode === CREATE && (
-      <Form
-      bookInterview={props.bookInterview}
-      interviewers = {props.interviewers}
-      onCancel ={() => back()}
-      onSave={save}
-      />
-    )} 
-     </article> 
-     
+      <Header time={props.time} />
+      {mode === EMPTY && <Empty onAdd={() => {console.log("onAdd"); transition(CREATE)}} />}
+      {mode === SHOW && (
+        <Show
+          student={props.interview.student}
+          interviewer={props.interview.interviewer}
+        />
+      )}
+      {mode === CREATE && (
+        <Form
+          bookInterview={props.bookInterview}
+          interviewers={props.interviewers}
+          onCancel={back}
+          onSave={save}
+        />
+      )}
+    </article>
   );
-};
+}
