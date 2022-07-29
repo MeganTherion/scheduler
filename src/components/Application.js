@@ -4,7 +4,7 @@ import DayList from "components/DayList";
 import InterviewerList from "components/InterviewerList";
 import "components/Application.scss";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import useVisualMode from "hooks/useVisualMode";
 
 ///KNOWN ISSUES //////
@@ -14,19 +14,20 @@ import useVisualMode from "hooks/useVisualMode";
 // > click on DAYS = everything gone
 // > SAVING not working
 
-const interviewers = [
-  { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
-  { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
-  { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
-  { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
-  { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" },
-];
+// const interviewers = [
+//   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
+//   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
+//   { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
+//   { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
+//   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" },
+// ];
 
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
+    
   });
 
   const setDay = (day) => setState({ ...state, day });
@@ -36,7 +37,7 @@ export default function Application(props) {
       axios.get("api/appointments"),
       axios.get("api/interviewers"),
     ]).then((response) => {
-      //console.log("response", response);
+      console.log("response", response);
       setState((prev) => ({
         ...prev,
         days: response[0]["data"],
@@ -49,23 +50,38 @@ export default function Application(props) {
   // const setDays = days => setState(prev => ({...prev, days }))
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview },
+      interview: { ...interview }
     };
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-    console.log("saving");
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
       console.log("saved");
       setState({ ...state, appointments });
     });
   }
+
+  function deleteAppointment(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    return axios.delete(`/api/appointments/${id}`, {appointment})
+      .then(() => {
+        setState({ ...state, appointments})
+        //console.log(state)
+      })
+  }
   
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
   const mappedAppts = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 
@@ -77,11 +93,10 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        deleteAppointment={deleteAppointment}
       />
     );
-  });
-
-  
+  }, );
 
   return (
     <main className="layout">

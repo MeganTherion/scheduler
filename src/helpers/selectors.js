@@ -44,7 +44,7 @@ export function getInterviewersForDay(state, day) {
   
   const interviewerArray = []; 
   for (const appt of Object.values(state.appointments)) {
-    console.log("appt", appt)
+    //console.log("appt", appt)
     if (apptsArray.includes(appt.id) && appt.interview !== null) {
       interviewerArray.push(state.interviewers[appt.interview.interviewer]);
     }
