@@ -71,6 +71,17 @@ export default function Application(props) {
       });
     });
   }
+
+  // function editAppointment(id, appointment) {
+
+  //   const appointment = {
+  //     ...state.appointments[id]
+  //   };
+  //   return axios.put(`/api/appointments/${id}`, { appointment }).then(() => {
+  //     console.log("editing from app.js");
+  //     setState(prev => ({ ...prev, appointments}));
+  //   });
+  // }
   
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
@@ -86,6 +97,7 @@ export default function Application(props) {
         interviewers={interviewers}
         bookInterview={bookInterview}
         deleteAppointment={deleteAppointment}
+        // editAppointment={editAppointment}
       />
     );
   });
