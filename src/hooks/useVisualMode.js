@@ -9,7 +9,7 @@ export default function useVisualMode(initial) {
   function transition(mode, replace = false) {
     //takes in a new mode
     if (!replace) {
-      setHistory(() => [...history, mode]);
+      setHistory((prev) => [...prev, mode]);
     }
     setMode(() => mode); //update mode state with the new value
   }
