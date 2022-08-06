@@ -29,10 +29,12 @@ export default function Appointment(props) {
       interviewer: interviewer,
     };
     transition(SAVING);
-    props.bookInterview(props.id, interview).then(() => {
-      transition(SHOW).catch((err) => transition(ERROR_SAVE));
-    });
-  }
+    props.bookInterview(props.id, interview)
+    .then(() => 
+      transition(SHOW))
+      .catch((err) => transition(ERROR_SAVE));
+    };
+  
 
   function deleteAppt(event) {
     transition(DELETING, true);
@@ -41,18 +43,6 @@ export default function Appointment(props) {
     .catch((err)=> transition(ERROR_DELETE, true))
   }
 
-  // function editAppt(name, interviewer) {
-  // const interview ={
-  //   student: name,
-  //   interviewer: interviewer,
-  // }
-  // transition(EDIT)
-  //   props.bookInterview(props.id, interview)
-  //   .then(() => {
-  //     transition(() => back())
-  //   })
-
-  //   }
 
   return (
     <article className="appointment">

@@ -41,6 +41,8 @@ const [state, setState] = useState({
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
       console.log("saved");
       setState({ ...state, appointments });
+      const days = ([axios.get(`/api/days`)])
+      .then(() => console.log(days))
     });
   }
 
@@ -56,13 +58,13 @@ const [state, setState] = useState({
     return axios.delete(`/api/appointments/${id}`, appointment)
     .then(()=> {
       setState(prev => ({ ...prev, appointments }));
-      Promise.all([axios.get(`/api/days`)])
-      .then(([days]) => {
-        setState(prev => ({
-          ...prev,
-          days: days.data
-        }));
-      });
+      ////////////
+      const days = ([axios.get(`/api/days`)])
+      .then(() => {
+      let container = 0;
+      let crystal = days.filter((day) => {day.appointment.id === appointment.id})
+     console.log(crystal)
+    })
     });
   }
   return  { state, setDay, bookInterview, deleteAppointment };
