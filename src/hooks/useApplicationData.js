@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
@@ -6,16 +6,18 @@ const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
+    interviewers: []
   });
 
   const setDay = (day) => setState({ ...state, day });
+
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
-      axios.get("api/appointments"),
-      axios.get("api/interviewers"),
-    ]).then((response) => {
-      //console.log("response", response);
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
+    ]).then((response) => { 
+      console.log("response",response);
       setState((prev) => ({
         ...prev,
         days: response[0]["data"],
@@ -28,7 +30,6 @@ const [state, setState] = useState({
   // const setDays = days => setState(prev => ({...prev, days }))
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
@@ -42,7 +43,6 @@ const [state, setState] = useState({
       console.log("saved");
       setState({ ...state, appointments });
       const days = ([axios.get(`/api/days`)])
-      .then(() => console.log(days))
     });
   }
 
@@ -57,15 +57,17 @@ const [state, setState] = useState({
     };
     return axios.delete(`/api/appointments/${id}`, appointment)
     .then(()=> {
+      
       setState(prev => ({ ...prev, appointments }));
-      ////////////
-      const days = ([axios.get(`/api/days`)])
-      .then(() => {
-      let container = 0;
-      let crystal = days.filter((day) => {day.appointment.id === appointment.id})
-     console.log(crystal)
-    })
+      Promise.all([axios.get(`/api/days`)])
+      .then(([days]) => {
+        setState(prev => ({
+          ...prev,
+          days: days.data
+        }));
+      });
     });
   }
+
   return  { state, setDay, bookInterview, deleteAppointment };
 };
