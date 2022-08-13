@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import "components/Appointment/styles.scss";
 import Header from "./Header";
 import Show from "./Show";
@@ -8,6 +7,7 @@ import Form from "./Form";
 import Confirm from "./Confirm";
 import useVisualMode from "hooks/useVisualMode";
 import Status from "./Status";
+import Error from "./Error";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
@@ -29,20 +29,19 @@ export default function Appointment(props) {
       interviewer: interviewer,
     };
     transition(SAVING);
-    props.bookInterview(props.id, interview)
-    .then(() => 
-      transition(SHOW))
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
       .catch((err) => transition(ERROR_SAVE));
-    };
-  
-
-  function deleteAppt(event) {
-    transition(DELETING, true);
-    props.deleteAppointment(props.id)
-    .then(() => transition(EMPTY))
-    .catch((err)=> transition(ERROR_DELETE, true))
   }
 
+  function deleteAppt() {
+    transition(DELETING, true);
+    props
+      .deleteAppointment(props.id)
+      .then(() => transition(EMPTY))
+      .catch((err) => transition(ERROR_DELETE));
+  }
 
   return (
     <article className="appointment" data-testid="appointment">
@@ -69,7 +68,6 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           onCancel={back}
           onSave={save}
-          // onEdit={editAppt}
         />
       )}
       {mode === SAVING && <Status message="Saving..." />}
@@ -89,8 +87,12 @@ export default function Appointment(props) {
           bookInterview={props.bookInterview}
           onCancel={back}
           onSave={save}
-          //onEdit={() => transition(SHOW)}
         />
+      )}
+      {mode === ERROR_SAVE && <Error message="Could not save appointment" />}
+
+      {mode === ERROR_DELETE && (
+        <Error message="Could not delete appointment" />
       )}
     </article>
   );

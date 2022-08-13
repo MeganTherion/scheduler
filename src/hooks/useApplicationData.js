@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
-const [state, setState] = useState({
+  const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers: []
+    interviewers: [],
   });
 
   const setDay = (day) => setState({ ...state, day });
@@ -16,8 +16,8 @@ const [state, setState] = useState({
       axios.get("/api/days"),
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
-    ]).then((response) => { 
-      console.log("response",response);
+    ]).then((response) => {
+      console.log("response", response);
       setState((prev) => ({
         ...prev,
         days: response[0]["data"],
@@ -38,36 +38,36 @@ const [state, setState] = useState({
       ...state.appointments,
       [id]: appointment,
     };
-    console.log("saving");
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
-      console.log("saved");
       setState({ ...state, appointments });
-      const days = ([axios.get(`/api/days`)])
+      Promise.all([axios.get(`/api/days`)]).then(([days]) => {
+        setState((prev) => ({
+          ...prev,
+          days: days.data,
+        }));
+      });
     });
   }
 
   function deleteAppointment(id) {
     const appointment = {
       ...state.appointments[id],
-      interview: null
+      interview: null,
     };
     const appointments = {
       ...state.appointments,
-      [id]: appointment
+      [id]: appointment,
     };
-    return axios.delete(`/api/appointments/${id}`, appointment)
-    .then(()=> {
-      
-      setState(prev => ({ ...prev, appointments }));
-      Promise.all([axios.get(`/api/days`)])
-      .then(([days]) => {
-        setState(prev => ({
+    return axios.delete(`/api/appointments/${id}`, appointment).then(() => {
+      setState((prev) => ({ ...prev, appointments }));
+      Promise.all([axios.get(`/api/days`)]).then(([days]) => {
+        setState((prev) => ({
           ...prev,
-          days: days.data
+          days: days.data,
         }));
       });
     });
   }
 
-  return  { state, setDay, bookInterview, deleteAppointment };
-};
+  return { state, setDay, bookInterview, deleteAppointment };
+}

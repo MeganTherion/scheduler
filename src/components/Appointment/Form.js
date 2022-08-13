@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import Appointment from "components/Appointment";
 import "components/Appointment/styles.scss";
-import classNames from "classnames";
 import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
@@ -18,20 +16,19 @@ export default function Form(props) {
     reset();
     props.onCancel();
   };
-  // const save = () => {
-  //   props.onSave(student, interviewer);
-  // };
 
   const save = () => {
     if (student === "") {
       setError("Student name cannot be blank");
       return;
-    } if (interviewer === null) {
+    }
+    if (interviewer === null) {
       setError("Please select an interviewer");
       return;
     }
+    setError("error");
     props.onSave(student, interviewer);
-  }
+  };
 
   return (
     <main className="appointment__card appointment__card--create">
