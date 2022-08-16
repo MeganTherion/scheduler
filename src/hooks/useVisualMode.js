@@ -10,15 +10,18 @@ export default function useVisualMode(initial) {
     //takes in a new mode
     if (!replace) {
       setHistory((prev) => [...prev, mode]);
+    } else {
+      setHistory((prev) => [...prev.slice(0, prev.length-1), mode]);
     }
-    setMode(() => mode); //update mode state with the new value
+    // setMode(() => mode); //update mode state with the new value
   }
 
   function back() {
-    if (history[history.length - 1] !== initial) {
-      history.pop();
+ 
+    if (history.length >= 2) {
+      setHistory((prev) => [...prev.slice(0, prev.length-1)]);
     }
-    setMode(() => history[history.length - 1]);
+    
   }
-  return { mode, transition, back }; //returns object with mode property (can also look like { mode: mode })
+  return { mode: history[history.length-1], transition, back }; //returns object with mode property (can also look like { mode: mode })
 }

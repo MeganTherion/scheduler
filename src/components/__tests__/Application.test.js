@@ -55,7 +55,7 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find((day) =>
       queryByText(day, "Monday")
     );
-    expect(getByText(day, /1 spot remaining/i)).toBeInTheDocument();
+    expect(getByText(day, /no spots remaining/i)).toBeInTheDocument();
   });
 
   it("loads data, cancels an interview, and increases the spots remaining for Monday by 1", async () => {
@@ -77,7 +77,7 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find((day) =>
       queryByText(day, "Monday")
     );
-    expect(getByText(day, /spots remaining/i)).toBeInTheDocument(); //there is a bug here
+    expect(getByText(day, /2 spots remaining/i)).toBeInTheDocument(); //there is a bug here
     debug();
     console.log(prettyDOM(appointment));
   });
