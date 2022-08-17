@@ -49,7 +49,6 @@ export default function Appointment(props) {
       {mode === EMPTY && (
         <Empty
           onAdd={() => {
-            console.log("onAdd");
             transition(CREATE);
           }}
         />
