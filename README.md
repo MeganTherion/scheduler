@@ -9,9 +9,12 @@ Interview Scheduler is a simple single-page app using React to mimic creating, e
 * Visit http://localhost:8000 in your browser.
 =======
 1. Fork this repository, then clone your fork.
+2. Also fork [this repository](https://github.com/MeganTherion/scheduler-api), and clone your fork. 
 2. Install dependencies with `npm install`.
 3. Start the web server using `npm start`. The app runs at http://localhost:8000.
+4. Start the API server using `npm start`. The API server runs at http://localhost:8001
 4. Visit http://localhost:8000 in your browser.
+5. Book an appointment!
 
 ## Screenshots
 !["Creating appointment"](https://github.com/MeganTherion/scheduler/blob/master/docs/Screenshot%202022-08-12%20at%208.08.15%20PM.png?raw=true)
@@ -19,4 +22,16 @@ Interview Scheduler is a simple single-page app using React to mimic creating, e
 !["Booked appointment"](https://github.com/MeganTherion/scheduler/blob/master/docs/Screenshot%202022-08-12%20at%208.08.30%20PM.png?raw=true)
 
 !["Deleting appointment"](https://github.com/MeganTherion/scheduler/blob/master/docs/Screenshot%202022-08-12%20at%208.08.37%20PM.png?raw=true)
->>>>>>> f5c75241bb1f444ce0ea39c35e9eaac12ca88f85
+
+
+## Dev Dependencies
+` 
+-react
+-react-DOM
+-axios
+-babel
+-webpack
+-sass
+-jest
+-cypress
+-storybook
