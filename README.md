@@ -25,13 +25,13 @@ Interview Scheduler is a simple single-page app using React to mimic creating, e
 
 
 ## Dev Dependencies
-` 
--react
--react-DOM
--axios
--babel
--webpack
--sass
--jest
--cypress
--storybook
+The following were used to build and test this project:
+-React
+-React-DOM
+-Axios
+-Babel
+-Webpack
+-Sass
+-Jest
+-Cypress
+-Storybook
