@@ -53,7 +53,7 @@ export default function Appointment(props) {
           }}
         />
       )}
-      {mode === SHOW && (
+      {mode === SHOW && props.interview && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
@@ -78,22 +78,22 @@ export default function Appointment(props) {
           onConfirm={deleteAppt}
         />
       )}
-      {mode === EDIT && (
+      {mode === EDIT && props.interview &&(
         <Form
-          name={(props.interview.student)}
+          student={props.interview.student}
+          interviewer={props.interview.interviewer}
           interviewers={props.interviewers}
-          interviewer={props.interviewers.interviewer}
-          bookInterview={props.bookInterview}
           onCancel={() => transition(SHOW)}
           onSave={save}
         />
+        
       )}
       {mode === ERROR_SAVE && (
-      <Error message="Could not save appointment" onClose={() => back()} />
+      <Error message="Could not save appointment" onClose={() => transition(CREATE)} />
     )}
 
       {mode === ERROR_DELETE && (
-        <Error message="Could not delete appointment" onClose={() => back()} />
+        <Error message="Could not delete appointment" onClose={() => transition(SHOW)} />
       )}
     </article>
   );
